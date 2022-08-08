@@ -131,8 +131,13 @@ class IncomingMailAttachment
     public function getFileInfo(int $fileinfo_const = FILEINFO_NONE): string
     {
         $finfo = new finfo($fileinfo_const);
+        $info = @$finfo->buffer($this->getContents());
 
-        return $finfo->buffer($this->getContents());
+        if($info === false){
+            return 'unknown';
+        }
+
+        return $info;
     }
 
     /**
